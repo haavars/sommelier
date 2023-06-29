@@ -101,4 +101,17 @@ defmodule Sommelier.Wines do
   def change_wine(%Wine{} = wine, attrs \\ %{}) do
     Wine.changeset(wine, attrs)
   end
+
+  def search_wine(query) do
+    embedding = Sommelier.Model.predict(query)
+    %{labels: labels} = Sommelier.Index.search(embedding, 5)
+
+    labels
+    |> Nx.to_flat_list()
+    |> get_wines()
+  end
+
+  def get_wines(ids) do
+    from(w in Wine, where: w.id in ^ids) |> Repo.all()
+  end
 end

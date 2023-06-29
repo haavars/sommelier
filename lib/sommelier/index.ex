@@ -8,6 +8,15 @@ defmodule Sommelier.Index do
   @impl true
   def init(_opts \\ []) do
     index = ExFaiss.Index.new(384, "IDMap,Flat")
+
+    index =
+      Sommelier.Wines.list_wines()
+      |> Enum.reduce(index, fn wine, index ->
+        embedding = wine.embedding
+        id = wine.id
+        ExFaiss.Index.add_with_ids(index, Nx.from_binary(embedding, :f32), Nx.tensor([id]))
+      end)
+
     {:ok, index}
   end
 
