@@ -10,7 +10,7 @@ defmodule Sommelier.Model do
 
     Nx.Serving.new(fn ->
       fn %{size: size} = inputs ->
-        inputs = Nx.Batch.pad(inputs, @batch_size - size)
+        inputs = Nx.Batch.pad(inputs, 8 - size)
         predict_fn.(params, inputs)[:pooled_state]
       end
     end)
