@@ -16,6 +16,9 @@ defmodule Sommelier.Application do
       {Phoenix.PubSub, name: Sommelier.PubSub},
       # Start Finch
       {Finch, name: Sommelier.Finch},
+      # Start Nx.Serving
+      {Nx.Serving,
+       serving: Sommelier.Model.serving(), name: SommelierModel, batch_size: 8, batch_timeout: 100},
       # Start the Endpoint (http/https)
       SommelierWeb.Endpoint
       # Start a worker by calling: Sommelier.Worker.start_link(arg)
