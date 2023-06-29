@@ -20,9 +20,10 @@ defmodule Sommelier.Application do
       {Nx.Serving,
        serving: Sommelier.Model.serving(), name: SommelierModel, batch_size: 8, batch_timeout: 100},
       # Start the Endpoint (http/https)
-      SommelierWeb.Endpoint
+      SommelierWeb.Endpoint,
       # Start a worker by calling: Sommelier.Worker.start_link(arg)
       # {Sommelier.Worker, arg}
+      Sommelier.Index
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
