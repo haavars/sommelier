@@ -59,6 +59,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Configure EXLA to use CUDA
+config :nx, :default_backend, {EXLA.Backend, client: :cuda}
+config :nx, :default_defn_options, compiler: EXLA, client: :cuda
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

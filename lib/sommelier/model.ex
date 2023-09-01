@@ -1,5 +1,8 @@
 defmodule Sommelier.Model do
   def serving() do
+    Nx.Defn.default_options(compiler: EXLA, client: :cuda)
+    Nx.global_default_backend({EXLA.Backend, client: :cuda})
+
     {:ok, %{model: model, params: params}} =
       Bumblebee.load_model({:hf, "sentence-transformers/paraphrase-MiniLM-L6-v2"})
 
